@@ -1,0 +1,50 @@
+name:                Nonogram
+version:             0.1.0.0
+github:              "githubuser/no"
+license:             BSD3
+author:              "Mgs"
+maintainer:          "olympiads@inbox.com"
+copyright:           "2022 Mgs"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please don't see the README on GitHub at <https://github.com/githubuser/Nonogram#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- gloss
+
+library:
+  source-dirs: src
+
+executables:
+  Nonogram-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    - -Wall
+    dependencies:
+    - Nonogram
+
+tests:
+  Nonogram-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - Nonogram
