@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -Wall #-}
 module Main where
 
 import Game
@@ -10,7 +11,7 @@ import Game
 -- Cell - cell of grid
 -- Hint - number on the side of the grid
 --
-
+ 
 
 main :: IO ()
 main = run

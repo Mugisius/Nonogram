@@ -41,6 +41,7 @@ calculateAnswer :: [String] -> [[Cell]]
 calculateAnswer s = reverse (map (map (\ x -> if x=='_' then White else Black )) s)
 
 calculateSizes :: [String] -> (Int, Int)
+calculateSizes [] = (0,0)
 calculateSizes (x:xs) = (length x, length xs + 1)
 
 blankBoard :: Int -> Int -> [[Cell]]
@@ -49,7 +50,7 @@ blankBoard n m | m < 1 = []
 
 blankLine :: Int -> [Cell]
 blankLine n | n < 1 = []
-            | otherwise = White : blankLine (n-1)
+            | otherwise = White : blankLine (n-1) 
 
 
 --------------------------------------------------------------------------------
@@ -92,8 +93,8 @@ run = do
   case (loadBoard (lines ans)) of
     (Left (Error s)) -> putStrLn ("Error: "++s)
     (Right b) -> do
-      play display bgColor fps initState drawApp handleEvent updateApp
-        where display = InWindow "Nonogram" (windowSizeX, windowSizeY) (100, 100)
+      play displayType bgColor fps initState drawApp handleEvent updateApp
+        where displayType = InWindow "Nonogram" (windowSizeX, windowSizeY) (100, 100) 
               windowSizeX = (sizeX b + maxHintsX + 2)*gridSize
               windowSizeY = (sizeY b + maxHintsY + 2)*gridSize
               maxHintsX = maximum (map length (hintsX b))

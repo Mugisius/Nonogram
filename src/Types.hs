@@ -6,16 +6,11 @@ answerPath :: FilePath
 answerPath = "answer.txt"
 
 gridSize :: Int
-gridSize = 40
+gridSize = 40  
 
 spaceSize :: Int
 spaceSize = 5
 
-barrierSize :: Int
-barrierSize = 7
-
-renderShift :: Int
-renderShift = 5
 
 -- Current state of Board
 data Board = Board

@@ -2,14 +2,14 @@ module Render where
 
 import Types
 import Graphics.Gloss
-import Graphics.Gloss.Interface.Pure.Game
+import Graphics.Gloss.Interface.Pure.Game()
 
 -- Draw all game
 drawApp :: GameState -> Picture
 drawApp (Playing board rsX rsY) = Translate rsX rsY $ pictures [pictureGrid board, 
                                                       pictureCells board, 
                                                       pictureHints board]
-drawApp Win = pictureWin
+drawApp Win = pictureWin 
 
 -- Draw parts of game
 pictureGrid :: Board -> Picture
@@ -21,24 +21,24 @@ genereteGrid x y = (genereteGridX (x+1) (y+1) 0) ++ (genereteGridY (y+1) (x+1) 0
 genereteGridX :: Int -> Int -> Int -> [Picture]
 genereteGridX 0 _ _ = []
 genereteGridX count size done | count == done = []
-                              | otherwise = (Line [(shift, 0), (shift, len)]) 
+                              | otherwise = (Line [(xShift, 0), (xShift, len)]) 
                                                : genereteGridX count size (done + 1)
-                                where shift = fromIntegral (done*gridSize)
+                                where xShift = fromIntegral (done*gridSize)
                                       len = fromIntegral (size*gridSize)
                               
 genereteGridY :: Int -> Int -> Int -> [Picture]
 genereteGridY 0 _ _ = []
 genereteGridY count size done | count == done = []
-                              | otherwise = (Line [(0, shift), (len, shift)]) 
+                              | otherwise = (Line [(0, yShift), (len, yShift)]) 
                                                : genereteGridY count size (done + 1)
-                                where shift = fromIntegral (done*gridSize)
+                                where yShift = fromIntegral (done*gridSize)
                                       len = fromIntegral (size*gridSize)
 pictureCells :: Board -> Picture
 pictureCells (Board _ _ _ _ cells _) = Pictures (genereteCells cells 0)
 
 genereteCells :: [[Cell]] -> Int -> [Picture]
 genereteCells [] _ = []
-genereteCells (x:xs) shift = (genereteCellsLine x shift 0) ++ (genereteCells xs (shift+1))
+genereteCells (x:xs) s = (genereteCellsLine x s 0) ++ (genereteCells xs (s+1))
 
 genereteCellsLine :: [Cell] -> Int -> Int -> [Picture]
 genereteCellsLine [] _ _ = []
@@ -61,7 +61,7 @@ genereteHintsX [] _ _ = []
 genereteHintsX (x:xs) shiftX shiftY = genereteHintsXLine x shiftX shiftY ++ 
                                       genereteHintsX xs shiftX (shiftY+1)
 
-genereteHintsXLine :: [Int] -> Int -> Int -> [Picture]
+genereteHintsXLine :: [Int] -> Int -> Int -> [Picture] 
 genereteHintsXLine [] _ _ = []
 genereteHintsXLine (x:xs) shiftX shiftY = (Translate sX sY $ Scale 0.2 0.2 $ Text $ show x)
                                                 : genereteHintsXLine xs (shiftX+1) shiftY
